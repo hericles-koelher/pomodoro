@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
     double gifHeight = MediaQuery.of(context).size.height / 3;
     double gifWidth = MediaQuery.of(context).size.width / 1.5;
 
-    String gifPath = "assets/image/cat_studying.gif";
+    String gifPath = "assets/image/pusheen_work.gif";
 
     List<Widget> rowChildren = [];
 
@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ];
     } else if (state is RestRunningState) {
-      gifPath = "assets/image/cat_sleeping.gif";
+      gifPath = "assets/image/pusheen_sleep.gif";
     }
 
     return Stack(
@@ -144,7 +144,8 @@ class _HomeScreenState extends State<HomeScreen> {
         Align(
           alignment: Alignment.bottomRight,
           // TODO: substituir por animação com fundo transparente
-          child: SizedBox(
+          child: Container(
+            padding: const EdgeInsets.only(right: 20),
             height: gifHeight,
             width: gifWidth,
             child: Image.asset(gifPath),
@@ -155,15 +156,15 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Flexible(
-                flex: 4,
                 child: Text(
                   formatDuration(state.duration),
                   style: Theme.of(context).textTheme.headline1,
                 ),
               ),
-              const Spacer(),
+              const SizedBox(
+                height: 15,
+              ),
               Flexible(
-                flex: 4,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: rowChildren,

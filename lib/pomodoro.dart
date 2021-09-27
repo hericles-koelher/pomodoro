@@ -15,7 +15,7 @@ class _PomodoroState extends State<Pomodoro> {
 
   @override
   void initState() {
-    timerBloc = TimerBloc(workMinutes: 25, restMinutes: 5);
+    timerBloc = TimerBloc(workMinutes: 1, restMinutes: 1);
 
     super.initState();
   }

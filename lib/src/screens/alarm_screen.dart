@@ -32,6 +32,7 @@ class AlarmScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Flexible(
+                  flex: 3,
                   child: Text(
                     label,
                     style: textTheme.headline4,
@@ -44,7 +45,9 @@ class AlarmScreen extends StatelessWidget {
                     size: 50,
                   ),
                 ),
-                const Spacer(),
+                const Spacer(
+                  flex: 2,
+                ),
                 Flexible(
                   child: ElevatedButton(
                     child: const Text(
