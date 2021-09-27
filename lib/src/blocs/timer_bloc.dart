@@ -13,7 +13,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   final Ticker _ticker = const Ticker();
   StreamSubscription<int>? _streamSubscription;
 
-  TimerBloc(int workMinutes, int restMinutes)
+  TimerBloc({required int workMinutes, required int restMinutes})
       : assert(workMinutes > 0),
         assert(restMinutes > 0),
         _duration = workMinutes * 60,
@@ -29,6 +29,12 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     on<RestTimerStarted>(_restStart);
     on<_RestTimerRunning>(_restTick);
     on<RestTimerEnded>(_restEnd);
+  }
+
+  @override
+  Future<void> close() {
+    _streamSubscription?.cancel();
+    return super.close();
   }
 
   void _init(_PomodoroTimerInitialized event, Emitter<TimerState> emit) {
