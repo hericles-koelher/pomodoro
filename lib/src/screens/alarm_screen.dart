@@ -20,8 +20,9 @@ class AlarmScreen extends StatelessWidget {
     final timerBloc = BlocProvider.of<TimerBloc>(context);
     final textTheme = Theme.of(context).textTheme;
 
-    final Future<AudioPlayer> futurePlayer =
-        _player.loop("mixkit-urgent-simple-tone-loop-2976.wav");
+    final Future<AudioPlayer> futurePlayer = _player.loop(
+      "mixkit-urgent-simple-tone-loop-2976.wav",
+    );
 
     return WillPopScope(
       onWillPop: () async => false,

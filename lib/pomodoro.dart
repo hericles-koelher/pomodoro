@@ -13,9 +13,13 @@ class Pomodoro extends StatefulWidget {
 class _PomodoroState extends State<Pomodoro> {
   late final TimerBloc timerBloc;
 
+  static const int minutesOfWork = 25;
+  static const int minutesOfRest = 5;
+
   @override
   void initState() {
-    timerBloc = TimerBloc(workMinutes: 1, restMinutes: 1);
+    timerBloc =
+        TimerBloc(workMinutes: minutesOfWork, restMinutes: minutesOfRest);
 
     super.initState();
   }
@@ -34,6 +38,9 @@ class _PomodoroState extends State<Pomodoro> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            color: Colors.blueGrey[600],
+          ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
               elevation: MaterialStateProperty.all(10),

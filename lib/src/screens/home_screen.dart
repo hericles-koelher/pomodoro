@@ -129,21 +129,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Stack(
       children: [
-        if (shouldSeeSettings)
-          Align(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              icon: FaIcon(
-                FontAwesomeIcons.cog,
-                color: Colors.grey[900],
-              ),
-              iconSize: iconSize,
-              onPressed: () {},
+        Align(
+          alignment: Alignment.topRight,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Tooltip(
+              triggerMode: TooltipTriggerMode.tap,
+              margin: const EdgeInsets.symmetric(horizontal: 35),
+              message:
+                  "This app works correctly only when focused, sorry for the inconvenient.",
+              textStyle: Theme.of(context).textTheme.headline6?.copyWith(
+                    color: Colors.white70,
+                  ),
+              child: const FaIcon(FontAwesomeIcons.infoCircle),
             ),
           ),
+        ),
         Align(
           alignment: Alignment.bottomRight,
-          // TODO: substituir por animação com fundo transparente
           child: Container(
             padding: const EdgeInsets.only(right: 20),
             height: gifHeight,
