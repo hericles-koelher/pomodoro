@@ -4,6 +4,24 @@ abstract class TimerEvent extends Equatable {
   const TimerEvent();
 }
 
+class TimerWentInBackground extends TimerEvent {
+  final DateTime time;
+
+  TimerWentInBackground() : time = DateTime.now();
+
+  @override
+  List<Object?> get props => [time];
+}
+
+class TimerBackInForeground extends TimerEvent {
+  final DateTime time;
+
+  TimerBackInForeground() : time = DateTime.now();
+
+  @override
+  List<Object?> get props => [time];
+}
+
 class _PomodoroTimerInitialized extends TimerEvent {
   @override
   List<Object?> get props => [];

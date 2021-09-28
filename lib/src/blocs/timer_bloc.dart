@@ -12,6 +12,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   final int _restDuration;
   final Ticker _ticker = const Ticker();
   StreamSubscription<int>? _streamSubscription;
+  DateTime? _wentInBackgroundTime;
 
   TimerBloc({required int workMinutes, required int restMinutes})
       : assert(workMinutes > 0),
@@ -29,12 +30,55 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     on<RestTimerStarted>(_restStart);
     on<_RestTimerRunning>(_restTick);
     on<RestTimerEnded>(_restEnd);
+    on<TimerWentInBackground>(_wentInBackground);
+    on<TimerBackInForeground>(_backInForeground);
   }
 
   @override
   Future<void> close() {
     _streamSubscription?.cancel();
     return super.close();
+  }
+
+  void _wentInBackground(
+      TimerWentInBackground event, Emitter<TimerState> emit) {
+    if (state is PomodoroRunningState || state is RestRunningState) {
+      _streamSubscription?.cancel();
+      _wentInBackgroundTime = event.time;
+    }
+  }
+
+  void _backInForeground(
+      TimerBackInForeground event, Emitter<TimerState> emit) {
+    if (state is PomodoroRunningState || state is RestRunningState) {
+      final Duration interval = event.time.difference(_wentInBackgroundTime!);
+
+      final int duration = state.duration - interval.inSeconds;
+
+      final isPomodoroRunningState = state is PomodoroRunningState;
+
+      if (duration.isNegative) {
+        if (isPomodoroRunningState) {
+          add(_RestTimerInitialized());
+        } else {
+          add(RestTimerEnded());
+        }
+      }
+
+      if (isPomodoroRunningState) {
+        _streamSubscription = _ticker.tick(duration).listen(
+          (duration) {
+            add(_PomodoroTimerRunning(duration));
+          },
+        );
+      } else {
+        _streamSubscription = _ticker.tick(duration).listen(
+          (duration) {
+            add(_RestTimerRunning(duration));
+          },
+        );
+      }
+    }
   }
 
   void _init(_PomodoroTimerInitialized event, Emitter<TimerState> emit) {

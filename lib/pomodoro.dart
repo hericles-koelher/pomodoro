@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pomodoro/src/blocs.dart';
 import 'package:pomodoro/src/screens.dart';
+import 'package:wakelock/wakelock.dart';
 
 class Pomodoro extends StatefulWidget {
   const Pomodoro({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class Pomodoro extends StatefulWidget {
   State<Pomodoro> createState() => _PomodoroState();
 }
 
-class _PomodoroState extends State<Pomodoro> {
+class _PomodoroState extends State<Pomodoro> with WidgetsBindingObserver {
   late final TimerBloc timerBloc;
 
   static const int minutesOfWork = 25;
@@ -18,6 +19,10 @@ class _PomodoroState extends State<Pomodoro> {
 
   @override
   void initState() {
+    WidgetsBinding.instance!.addObserver(this);
+
+    Wakelock.enable();
+
     timerBloc =
         TimerBloc(workMinutes: minutesOfWork, restMinutes: minutesOfRest);
 
@@ -25,7 +30,24 @@ class _PomodoroState extends State<Pomodoro> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      timerBloc.add(TimerWentInBackground());
+      Wakelock.disable();
+    } else if (state == AppLifecycleState.resumed) {
+      timerBloc.add(TimerBackInForeground());
+      Wakelock.enable();
+    }
+
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+
+    Wakelock.disable();
+
     timerBloc.close();
 
     super.dispose();

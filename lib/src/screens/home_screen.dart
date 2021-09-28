@@ -70,7 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _screenBuilder(BuildContext context, TimerState state) {
     final timerBloc = BlocProvider.of<TimerBloc>(context);
-    bool shouldSeeSettings = state is PomodoroInitialState;
     double iconSize = MediaQuery.of(context).size.width / 12;
     double gifHeight = MediaQuery.of(context).size.height / 3;
     double gifWidth = MediaQuery.of(context).size.width / 1.5;
