@@ -46,7 +46,6 @@
 - **[Flutter](https://flutter.dev/)**
 - **[Provider](https://pub.dev/packages/provider)**
 - **[Bloc](https://pub.dev/packages/bloc)**
-- **[Equatable](https://pub.dev/packages/equatable)**
 
 ---
 
