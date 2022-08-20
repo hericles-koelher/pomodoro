@@ -9,15 +9,15 @@ abstract class TimerState extends Equatable {
 }
 
 class PomodoroInitialState extends TimerState {
-  const PomodoroInitialState(int duration) : super(duration);
+  const PomodoroInitialState(super.duration);
 }
 
 class PomodoroRunningState extends TimerState {
-  const PomodoroRunningState(int duration) : super(duration);
+  const PomodoroRunningState(super.duration);
 }
 
 class PomodoroPausedState extends TimerState {
-  const PomodoroPausedState(int duration) : super(duration);
+  const PomodoroPausedState(super.duration);
 }
 
 class RestInitialState extends TimerState {
@@ -25,7 +25,7 @@ class RestInitialState extends TimerState {
 }
 
 class RestRunningState extends TimerState {
-  const RestRunningState(int duration) : super(duration);
+  const RestRunningState(super.duration);
 }
 
 class RestTimeoutState extends TimerState {

@@ -19,7 +19,7 @@ class _PomodoroState extends State<Pomodoro> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
 
     Wakelock.enable();
 
@@ -44,7 +44,7 @@ class _PomodoroState extends State<Pomodoro> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
 
     Wakelock.disable();
 
